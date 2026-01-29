@@ -9,8 +9,6 @@ double median(int* array, int size);
 double stddev(int* array, int size);
 
 int main() {
-    // Sets the printing of floating-point numbers
-    // to show only 2 places after the decimal point
     cout << fixed << showpoint;
     cout << setprecision(2);
 
@@ -18,12 +16,12 @@ int main() {
     cout << "Enter number of grades: ";
     cin >> no_grades;
 
-    if (no_grades < 1) {
-        cout << "Error!" << endl;
+    if (no_grades < 1) { //must have one or more grades for algorithm to work
+        cerr << "Error!" << endl;
         exit(1);
     }
 
-    int *grades = new int[no_grades];
+    int *grades = new int[no_grades]; //create new dynamic array with size of no grades
 
     cout << "Enter grades (each on a new line):" << endl;
     for (int i = 0; i < no_grades; i++) {
@@ -59,36 +57,36 @@ void bubbleSort(int *array, int size) {
     } // for i
 }
 
-double total;
+double total; //declare outside to avoid redeclaring each time fn is called
 double average(int *array, int size) {
-    total = 0;
+    total = 0; 
     for (int i = 0; i < size; i++) {
-        total += array[i];
+        total += array[i]; //sum each element to running total
     }
-    return total / size;
+    return total / size; 
 }
 
 //assumes that arr is sorted
-int m;
+int m; //declare outside to avoid redeclaring each time fn is called
 double median(int* array, int size) {
     m = size / 2;
-    if (size % 2) {
+    if (size % 2) { //if odd num of elements, median is just the middlemost element
         return array[m];
-    }
+    } //otherwise median is the avg of the two middle elements
     return (array[m - 1] + array[m]) / 2;
 }
 
-double sum_sq, mu, diff;
+double sum_sq, mu, diff; //declare outside to avoid redeclaring each time fn is called
 double stddev(int* array, int size) {
-    if (size == 1) {
+    if (size == 1) { //to avoid division by zero later along the line
         return 0;
     }
 
-    mu = average(array, size);
+    mu = average(array, size); //calc average outside loop to avoid calling every iter
     sum_sq = 0;
     for (int i = 0; i < size; i++) {
         diff = array[i] - mu;
-        sum_sq += diff * diff;
+        sum_sq += diff * diff; //better way to do square
     }
-    return pow(sum_sq / (size - 1), 0.5);
+    return pow(sum_sq / (size - 1), 0.5);  //doing sqrt with pow
 }
