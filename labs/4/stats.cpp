@@ -58,17 +58,17 @@ void bubbleSort(int *array, int size) {
 }
 
 double total; //declare outside to avoid redeclaring each time fn is called
-double average(int *array, int size) {
+double average(int *array, int size) { //takes in dyn int arr and its size
     total = 0; 
     for (int i = 0; i < size; i++) {
         total += array[i]; //sum each element to running total
     }
-    return total / size; 
+    return total / size; //compute and output avg
 }
 
 //assumes that arr is sorted
 int m; //declare outside to avoid redeclaring each time fn is called
-double median(int* array, int size) {
+double median(int* array, int size) { //takes in dyn int arr and its size
     m = size / 2;
     if (size % 2) { //if odd num of elements, median is just the middlemost element
         return array[m];
@@ -77,7 +77,7 @@ double median(int* array, int size) {
 }
 
 double sum_sq, mu, diff; //declare outside to avoid redeclaring each time fn is called
-double stddev(int* array, int size) {
+double stddev(int* array, int size) { //takes in dyn int arr and its size
     if (size == 1) { //to avoid division by zero later along the line
         return 0;
     }
@@ -87,6 +87,6 @@ double stddev(int* array, int size) {
     for (int i = 0; i < size; i++) {
         diff = array[i] - mu;
         sum_sq += diff * diff; //better way to do square
-    }
+    } //compute and return stddev
     return pow(sum_sq / (size - 1), 0.5);  //doing sqrt with pow
 }

@@ -50,7 +50,7 @@ void alpha_count_zeros() {
 
 int str1_len;
 bool running_is_anagram;
-bool is_anagram(string &str1, string &str2) { //call by ref: even though 
+bool is_anagram(string &str1, string &str2) { //call by ref: even though the values are not modified, ref is almost always more efficient
     alpha_count_zeros(); //reset the alpha count arr before starting in case is_anagrams is run multiple times
 
     str1_len = str1.length();
@@ -75,4 +75,35 @@ bool is_anagram(string &str1, string &str2) { //call by ref: even though
     }
 
     return !running_is_anagram; //if all zeros, then is anagram so return 1 else return 0.
+}
+
+//gigachad alternative: 
+// -> doesn't care if strings are not cleaned 
+// -> does everything with fewest number of loops
+// -> no new memory allocation inside fn whatsoever
+// -> zero selection so zero branch prediction therefore max speed
+// -> no helper or built in functions (aside from length)
+// -> causes hella memory corruption if user inputs big UTF chars (i.e punishes user if they type wierd stuff)
+unsigned char c;
+size_t idx, len, len1, len2; //reused global vars like a boss
+bool acc;
+int8_t tiny_alpha_count[26]; //cache friendly arr to reduce cache misses
+bool is_dirty_str_anagram(string &str1, string &str2) {
+    for (idx = 0; idx < 26; tiny_alpha_count[idx++] = 0);
+
+    len1 = str1.length();
+    len2 = str2.length();
+    len = len1 ^ ((len1 ^ len2) & -(len1 < len2)); //branchless max fn equiv
+
+    for (idx = 0; idx < len; idx++) {
+        c = str1[idx] | 32; //force lower by bitmask
+        tiny_alpha_count[c - 'a'] += (c >= 'a' && c <= 'z'); //branchless range check and possible mem corruption if idx out of bounds
+
+        c = str2[idx] | 32;
+        tiny_alpha_count[c - 'a'] -= (c >= 'a' && c <= 'z');
+    }
+
+    acc = 0; 
+    for (idx = 0; idx < 26; idx++) acc |= tiny_alpha_count[idx];
+    return !acc;
 }
