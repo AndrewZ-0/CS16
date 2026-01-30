@@ -11,7 +11,7 @@ int main() {
     cout << "Enter first string:" << endl; 
     getline(cin, str1);
 
-    cout << "Enter first string:" << endl; 
+    cout << "Enter second string:" << endl; 
     getline(cin, str2);
     
     clean_str(str1);
