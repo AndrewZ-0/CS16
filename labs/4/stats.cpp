@@ -33,7 +33,7 @@ int main() {
 
     cout << "Average: " << average(grades, no_grades) << endl;
     cout << setw(9) << "Median: " << median(grades, no_grades) << endl;
-    cout << setw(9) << "Stddev: " << stddev(grades, no_grades) << endl;
+    cout << setw(9) << "StdDev: " << stddev(grades, no_grades) << endl;
 
     delete[] grades;
 
