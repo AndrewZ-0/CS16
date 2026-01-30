@@ -73,7 +73,7 @@ double median(int* array, int size) { //takes in dyn int arr and its size
     if (size % 2) { //if odd num of elements, median is just the middlemost element
         return array[m];
     } //otherwise median is the avg of the two middle elements
-    return (array[m - 1] + array[m]) / 2;
+    return (array[m - 1] + array[m]) / 2.0;
 }
 
 double sum_sq, mu, diff; //declare outside to avoid redeclaring each time fn is called
