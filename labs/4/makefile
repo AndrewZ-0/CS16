@@ -6,6 +6,6 @@ anagrams: anagrams.cpp
 stats: stats.cpp
 	g++ -o stats stats.cpp -std=c++17
 
-clear:
+clean:
 	rm -r anagrams
 	rm -r stats
