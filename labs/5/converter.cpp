@@ -65,6 +65,12 @@ int sdec2d(string sdec) { //basically the same algo as bin2d except with base 10
     return acc;
 }
 
+//Pre-Conditions: takes in an int of the binary (assumes 0 or 1 else UB)
+//Post-Conditions: casts to char
+char int2bin(int val) {
+    return val + '0';
+}
+
 //Pre-Conditions: takes in a string of the denary (ideally containing only '0' -> '9' chars and only +ve)
 //Post-Conditions: computes binary equiv of the str denary
 string dec2b(string sdec) {
@@ -81,7 +87,7 @@ string dec2b(string sdec) {
     //(theoretically algorithm cannot produce -ve vals, but > operator is used just in case of a cosmic ray bit flip or smthing)
     string bin = "";
     while (quotient > 0) { 
-        bin = to_string(quotient % 2) + bin;
+        bin = int2bin(quotient % 2) + bin;
         quotient /= 2; 
     }
 
@@ -117,6 +123,24 @@ string dec2h(string sdec) {
     }
 
     return hex;
+}
+
+string fast_dec2bh(string sdec, char bh) {
+    int quotient = sdec2d(sdec);
+
+    if (!quotient) return "0";
+
+    string based = "";
+
+    int base_shift = (bh == 'b')? 1 : 4;
+    int mod_mask = 2 << (base_shift - 1);
+
+    while (quotient > 0) { 
+        based = int2bin(quotient & mod_mask) + based;
+        quotient >>= base_shift; 
+    }
+
+    return based;
 }
 
 //Pre-Conditions: takes in the denary val as str (ideally containing only '0' -> '9' chars and only +ve)
